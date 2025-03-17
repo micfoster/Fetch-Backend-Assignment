@@ -1,9 +1,9 @@
 import { Router } from "express";
+import { getPointsById, processReceipt } from "../controllers/receipt.controller";
 
 const receiptRouter = Router();
 
-
-receiptRouter.post('/process');
-receiptRouter.get('/:id/points');
+receiptRouter.post('/process', processReceipt);
+receiptRouter.get('/:id/points', getPointsById);
 
 export default receiptRouter;

@@ -1,17 +1,17 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response, RequestHandler } from "express";
 
-export const processReceipt = (request: Request, response: Response, next: NextFunction) => {
+export const processReceipt: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-        return response.status(200).json({ message: "process Receipt" });
+        res.status(200).json({ message: "process Receipt" });
+    } catch (err) {
+        next(err);
+    }
+};
+
+export const getPointsById: RequestHandler = async (request, response, next) => {
+    try {
+        response.status(200).json({ message: "get Points By Id" });
     } catch (error) {
         next(error);
     }
 };
-
-export const getPointsById = (request: Request, response: Response, next: NextFunction) => {
-    try {
-        return response.status(200).json({ message: "get Points By Id" });
-    } catch (error) {
-        next(error);
-    }
-}
