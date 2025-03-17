@@ -1,17 +1,28 @@
 import { NextFunction, Request, Response, RequestHandler } from "express";
+import { Receipt } from "../models/receipt.model";
+import { receiptService } from "../services/receipt.service";
 
 export const processReceipt: RequestHandler = async (req, res, next): Promise<void> => {
     try {
-        res.status(200).json({ message: "process Receipt" });
+        const receipt = req.body as Receipt;
+        const result = receiptService.processReceipt(receipt);
+        res.status(200).json({ id: result.id });
     } catch (err) {
         next(err);
     }
 };
 
-export const getPointsById: RequestHandler = async (request, response, next) => {
+export const getPointsById: RequestHandler = async (req, res, next) => {
     try {
-        response.status(200).json({ message: "get Points By Id" });
-    } catch (error) {
-        next(error);
+        const { id } = req.params;
+        const points = receiptService.getPoints(id);
+
+        if (points === null) {
+            res.status(404).json({ message: 'No receipt found for that ID.' });
+        } else {
+            res.status(200).json({ points });
+        }
+    } catch (err) {
+        next(err);
     }
 };
