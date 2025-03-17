@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import router from './routes/index.route';
+import { errorHandler } from './middleware/errorHandler';
 
 dotenv.config();
 
@@ -9,6 +10,7 @@ const port = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use('/', router);
+app.use(errorHandler);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
